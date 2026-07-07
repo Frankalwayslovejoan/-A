@@ -1,0 +1,8 @@
+[{
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "io.github.frankalwayslovejoan.twa",
+        "sha256_cert_fingerprints": ["04:B2:B2:EA:9A:99:C3:7F:3A:50:A8:F9:1E:FF:90:57:9E:E4:36:E9:FA:40:0C:21:51:FE:7B:B2:7E:CE:AB:BD"]
+      }
+    }]
