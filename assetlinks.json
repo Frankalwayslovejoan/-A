@@ -2,7 +2,7 @@
       "relation": ["delegate_permission/common.handle_all_urls"],
       "target": {
         "namespace": "android_app",
-        "package_name": "io.github.frankalwayslovejoan.twa",
-        "sha256_cert_fingerprints": ["04:B2:B2:EA:9A:99:C3:7F:3A:50:A8:F9:1E:FF:90:57:9E:E4:36:E9:FA:40:0C:21:51:FE:7B:B2:7E:CE:AB:BD"]
+        "package_name": "com.moecar.journal",
+        "sha256_cert_fingerprints": ["6B:C0:1C:ED:2F:01:2D:38:B3:4A:F5:B1:62:FA:FA:7E:D7:17:15:92:35:6E:B8:0E:DB:29:4D:10:06:21:3A:CC"]
       }
     }]
