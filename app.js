@@ -1,7 +1,7 @@
-// 📡 註冊 PWA 離線小管家神經
+// 📡 註冊 PWA 離線小管家神經 (精準作用域版)
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js')
+        navigator.serviceWorker.register('sw.js', { scope: './' })
             .then(reg => console.log('📡 萌車日記離線小管家註冊成功！', reg.scope))
             .catch(err => console.log('😢 小管家罷工了：', err));
     });
