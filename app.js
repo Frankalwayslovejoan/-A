@@ -576,23 +576,31 @@ const fieldMapping = {
   mileage: '里程'
 };
 
-// 自動動態尋找你原本 App 正在使用的 localStorage Key
-function getCarStorageKey() {
-  const keys = ['moecar_records', 'records', 'car_records', 'moecar-records', 'records_list'];
-  for (let k of keys) {
-    if (localStorage.getItem(k)) return k;
+// 🛠️ 修正版：地毯式搜尋真正有資料的 localStorage 欄位
+function getCarStorageData() {
+  // 1. 先找看看有沒有很明顯像是紀錄的 key
+  const likelyKeys = ['moecar_records', 'records', 'car_records', 'fuel_records', 'moecar-records', 'records_list'];
+  for (let k of likelyKeys) {
+    const d = localStorage.getItem(k);
+    if (d && d.startsWith('[') && d.length > 5) return d; 
   }
+  
+  // 2. 如果沒對中，就把所有 localStorage 翻一遍，只要是陣列結構且有字數就抓出來
   for (let i = 0; i < localStorage.length; i++) {
     const k = localStorage.key(i);
-    if (k && (k.includes('car') || k.includes('record') || k.includes('journal'))) return k;
+    const d = localStorage.getItem(k);
+    // 判斷是否為儲存 JSON 陣列的紀錄
+    if (d && d.startsWith('[') && d.length > 5) {
+      return d;
+    }
   }
-  return 'moecar_records'; // 預設值
+  return null;
 }
-
-// 📥 功能一：匯出 Excel (CSV)
+// 📥 修正版：匯出 Excel
 function exportToExcel() {
-  const key = getCarStorageKey();
-  const rawData = localStorage.getItem(key);
+  // ── 改成直接拿資料 ──
+  const rawData = getCarStorageData(); 
+  
   if (!rawData) {
     alert('目前還沒有任何紀錄可以匯出喔！');
     return;
@@ -630,7 +638,7 @@ function exportToExcel() {
   URL.revokeObjectURL(url);
 }
 
-// 📤 功能二：匯入 Excel (CSV)
+// 📤 修正版：匯入 Excel
 function handleImportFile(e) {
   const file = e.target.files[0];
   if (!file) return;
@@ -671,8 +679,19 @@ function handleImportFile(e) {
 
       if (importedRecords.length > 0) {
         if (confirm(`確認要匯入這 ${importedRecords.length} 筆資料嗎？這將會覆蓋目前的 App 資料喔！`)) {
-          const key = getCarStorageKey();
-          localStorage.setItem(key, JSON.stringify(importedRecords));
+          // 🛠️ 聰明覆蓋：先找找原本叫什麼，沒有就預設用 'moecar_records'
+          let targetKey = 'moecar_records';
+          const likelyKeys = ['moecar_records', 'records', 'car_records', 'fuel_records', 'moecar-records', 'records_list'];
+          for (let k of likelyKeys) {
+            if (localStorage.getItem(k)) { targetKey = k; break; }
+          }
+          for (let i = 0; i < localStorage.length; i++) {
+            const k = localStorage.key(i);
+            const d = localStorage.getItem(k);
+            if (d && d.startsWith('[')) { targetKey = k; break; }
+          }
+          
+          localStorage.setItem(targetKey, JSON.stringify(importedRecords));
           alert('🎉 資料匯入成功！網頁即將重新整理。');
           window.location.reload();
         }
