@@ -384,15 +384,19 @@
         </div>
     </div>
 
-    <!-- 📊 資料備份與還原按鈕區塊 -->
-<div class="backup-section" style="margin: 20px; text-align: center;">
-  <hr style="border: 0; border-top: 1px dashed #ccc; margin-bottom: 20px;">
-  <button id="exportBtn" style="padding: 10px 20px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer; margin-right: 10px; font-weight: bold;">
-    📊 匯出 Excel (CSV)
-  </button>
-  <button id="importBtn" style="padding: 10px 20px; background-color: #008CBA; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">
-    📥 匯入 Excel (CSV)
-  </button>
+                <!-- 📊 資料備份與還原按鈕區塊 (修正 RWD 行動端排版) -->
+<div class="backup-section" style="margin: 20px 15px 100px 15px; text-align: center;">
+  <hr style="border: 0; border-top: 1px dashed #e6d5cb; margin-bottom: 20px;">
+  
+  <div style="display: flex; gap: 10px; justify-content: center;">
+    <button id="exportBtn" style="flex: 1; max-width: 160px; padding: 12px 10px; background-color: #5cb85c; color: white; border: none; border-radius: 20px; cursor: pointer; font-weight: bold; font-size: 14px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); display: flex; align-items: center; justify-content: center; gap: 4px;">
+      📊 匯出 Excel
+    </button>
+    <button id="importBtn" style="flex: 1; max-width: 160px; padding: 12px 10px; background-color: #0275d8; color: white; border: none; border-radius: 20px; cursor: pointer; font-weight: bold; font-size: 14px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); display: flex; align-items: center; justify-content: center; gap: 4px;">
+      📥 匯入 Excel
+    </button>
+  </div>
+  
   <input type="file" id="fileInput" accept=".csv" style="display: none;" />
 </div>
     <div class="nav">
